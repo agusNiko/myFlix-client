@@ -26299,7 +26299,7 @@ try {
           _id: 1,
           Title: 'Redneck Zombies',
           Description: 'A barrel of radioactive waste is lost out in the woods. Some demented rednecks find it and use it as part of their still. Everybody who drinks the liquor they produced turns into zombies. ',
-          ImagePath: 'https://www.imdb.com/title/tt0093833/mediaviewer/rm1923278592?ref_=tt_ov_i'
+          ImagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/54/Redneckzombies.jpg/220px-Redneckzombies.jpg'
         }, {
           _id: 2,
           Title: 'Zoombies',
@@ -26309,7 +26309,7 @@ try {
           _id: 3,
           Title: 'Zombiber',
           Description: 'A fun weekend turns into madness and horror for a bunch of groupies looking for fun in a beaver infested swamp. ',
-          ImagePath: './redneckzombie.jpg'
+          ImagePath: '"https://www.imdb.com/title/tt2784512/mediaviewer/rm4129412096?ref_=tt_ov_i"'
         }],
         selectedMovie: null
       };
@@ -26344,7 +26344,14 @@ try {
             lineNumber: 36,
             columnNumber: 13
           }
-        }, selectedMovie ? /*#__PURE__*/_reactDefault.default.createElement(_movieViewMovieView.MovieView, {
+        }, /*#__PURE__*/_reactDefault.default.createElement("div", {
+          __self: this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 37,
+            columnNumber: 17
+          }
+        }, "The thee worst Zombie movies: "), selectedMovie ? /*#__PURE__*/_reactDefault.default.createElement(_movieViewMovieView.MovieView, {
           movie: selectedMovie,
           onBackClick: newSelectedMovie => {
             this.setSelectMovie(newSelectedMovie);
@@ -26352,22 +26359,26 @@ try {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 38,
+            lineNumber: 39,
             columnNumber: 23
           }
-        }) : movies.map(movie => /*#__PURE__*/_reactDefault.default.createElement(_movieCardMovieCard.MovieCard, {
-          key: movie._id,
-          movieData: movie,
-          onMovieClick: movie => {
-            this.setSelectMovie(movie);
-          },
-          __self: this,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 40,
-            columnNumber: 43
-          }
-        })))
+        }) : movies.map(movie => {
+          return (
+            /*#__PURE__*/_reactDefault.default.createElement(_movieCardMovieCard.MovieCard, {
+              key: movie._id,
+              movieData: movie,
+              onMovieClick: movie => {
+                this.setSelectMovie(movie);
+              },
+              __self: this,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 43,
+                columnNumber: 37
+              }
+            })
+          );
+        }))
       );
     }
   }
@@ -26404,7 +26415,7 @@ try {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 8,
+            lineNumber: 10,
             columnNumber: 12
           }
         }, movieData.Title)
