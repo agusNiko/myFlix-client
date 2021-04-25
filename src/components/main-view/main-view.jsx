@@ -1,6 +1,10 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
+
 import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/MovieView'
+
+
 
 export class MainView extends React.Component{
 
@@ -8,12 +12,22 @@ export class MainView extends React.Component{
         super();// initializes your component’s state, and without it, you’ll get an error if you try to use this.state inside constructor()
         this.state = { //this is the component statement(variable)??????
             movies: [
-                { _id: 1, Title: 'Redneck Zombies', Description: 'A barrel of radioactive waste is lost out in the woods. Some demented rednecks find it and use it as part of their still. Everybody who drinks the liquor they produced turns into zombies. ', ImagePath: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/54/Redneckzombies.jpg/220px-Redneckzombies.jpg'},
-                { _id: 2, Title: 'Zoombies', Description: 'When a strange virus quickly spreads through a safari park and turns all the zoo animals undead, those left in the park must stop the creatures before they escape and zombify the whole city. ', ImagePath: 'https://www.imdb.com/title/tt5340882/mediaviewer/rm1387665408?ref_=tt_ov_i'},
-                { _id: 3, Title: 'Zombiber', Description: 'A fun weekend turns into madness and horror for a bunch of groupies looking for fun in a beaver infested swamp. ', ImagePath: '"https://www.imdb.com/title/tt2784512/mediaviewer/rm4129412096?ref_=tt_ov_i"'}  
+     
             ],
             selectedMovie: null
         };
+    }
+
+    componentDidMount(){ 
+        axios.get('https://myflapix.herokuapp.com/movies') 
+            .then(response => {
+                this.setState({
+                    movies:response.data
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
 
@@ -30,7 +44,7 @@ export class MainView extends React.Component{
         
         // if (selectedMovie) return <MovieView movie={selectedMovie}/>
 
-        if (movies.length === 0) return <div className="main-view">The list is empty!</div>;
+        if (movies.length === 0) return <div className="main-view"/>;
 
         return (
             <div className="main-view">
