@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
+import { LoginView} from '../login-view/login-view'
+import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/MovieView'
-
-
 
 export class MainView extends React.Component{
 
@@ -14,7 +14,8 @@ export class MainView extends React.Component{
             movies: [
      
             ],
-            selectedMovie: null
+            selectedMovie: null,
+            user: null,
         };
     }
 
@@ -30,25 +31,44 @@ export class MainView extends React.Component{
             });
     }
 
-
     setSelectMovie(newSelectedMovie){
         this.setState({
             selectedMovie: newSelectedMovie
         });
     }
 
+    /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
+   
+    onLoggedIn(user) {
+        this.setState({
+            user
+        });
+    }
+
+    onRegistration(username) {
+        this.setState(
+            {
+              username 
+            }
+        );
+    }
 
     render() {
         //const movies = this.state.movies; /////// instead of this expression we use the "object destruction"
-        const { movies, selectedMovie } = this.state; // What is the object destruction? I did not understand 
-        
-        // if (selectedMovie) return <MovieView movie={selectedMovie}/>
+        const { movies, selectedMovie, user } = this.state; // What is the object destruction? I did not understand 
+       
+        if (user === 'newUser') return <RegistrationView onRegistration={user => this.onRegistration(user)}/>
+       
+        /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
+       if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+
+       //if (selectedMovie) return <MovieView movie={selectedMovie}/>
 
         if (movies.length === 0) return <div className="main-view"/>;
 
         return (
             <div className="main-view">
-                <div>The thee worst Zombie movies: </div>
+                <div>MyFlixApplication</div>
                 {selectedMovie
                     ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectMovie(newSelectedMovie); }}/>
 
