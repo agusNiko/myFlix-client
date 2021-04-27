@@ -69,6 +69,7 @@ export class MainView extends React.Component{
         return (
             <div className="main-view">
                 <div>MyFlixApplication</div>
+                
                 {selectedMovie
                     ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectMovie(newSelectedMovie); }}/>
 
