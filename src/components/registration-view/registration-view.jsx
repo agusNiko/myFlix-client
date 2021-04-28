@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 
-export function RegistrationView(prop) {
+
+export function RegistrationView(props) {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ confirmPassword, setConfirmPassword ] = useState('');
@@ -10,13 +12,12 @@ export function RegistrationView(prop) {
 
 
     const handleSubmit = () => {
-       // e.preventDefault();
+      //  e.preventDefault();
         console.log(username, password, confirmPassword, email, Birthday); //
         /* Send a request to the server for authentication */
         /* then call props.onLoggedIn(username) */
         props.onRegistration(null);
       };
-
 
 
 return (
@@ -45,3 +46,15 @@ return (
     </form>
 );
 }
+
+RegistrationView.propTypes = {
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    confirmPassword: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired
+  };
+
+
+  
