@@ -46,10 +46,10 @@ export class MainView extends React.Component{
         });
     }
 
-    onRegistration(username) {
+    onRegistration(user) {
         this.setState(
             {
-              username 
+                user 
             }
         );
     }

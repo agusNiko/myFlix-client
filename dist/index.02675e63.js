@@ -26324,9 +26324,9 @@ try {
         user
       });
     }
-    onRegistration(username) {
+    onRegistration(user) {
       this.setState({
-        username
+        user
       });
     }
     render() {
@@ -29470,8 +29470,8 @@ try {
     const [confirmPassword, setConfirmPassword] = _react.useState('');
     const [email, setEmail] = _react.useState('');
     const [Birthday, setBirthday] = _react.useState('');
-    const handleSubmit = () => {
-      // e.preventDefault();
+    const handleSubmit = e => {
+      e.preventDefault();
       console.log(username, password, confirmPassword, email, Birthday);
       // 
       /*Send a request to the server for authentication*/
