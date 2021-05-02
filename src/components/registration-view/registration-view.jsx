@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 
 
 
@@ -24,46 +22,28 @@ export function RegistrationView(props) {
 
 return (
     <form>
-       <Form.Group controlId="formUsername">
-  <Form.Label>
-    Username:
-  </Form.Label>
-  <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} />
-</Form.Group>
-
-<Form.Group controlId="formPassword">
-  <Form.Label>
-  Password:
-  </Form.Label>
-  <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
-</Form.Group>
-
-<Form.Group controlId="formConfirmPassword">
-  <Form.Label>
-  Confirm Password:
-  </Form.Label>
-  <Form.Control type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-</Form.Group>
-
-
-<Form.Group controlId="formBirthday">
-  <Form.Label>
-  Birthday:
-  </Form.Label>
-  <Form.Control type="Birthday" value={Birthday} onChange={e => setBirthday(e.target.value)} />
-</Form.Group>
-
-
-<Form.Group controlId="formEmail">
-  <Form.Label>
-  Email: 
-  </Form.Label>
-  <Form.Control type="Email" value={Birthday} onChange={e => setEmail(e.target.value)} />
-</Form.Group>
-     
-<Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-</form>
-
+        <label>
+            Username: 
+            <input type="tex" value={username} onChange={e=> setUsername(e.target.value)}/>
+        </label>
+        <label>
+             Password: 
+            <input type="tex" value={password} onChange={e=> setPassword(e.target.value)}/>
+        </label>
+        <label>
+            Confirm password: 
+            <input type="tex" value={confirmPassword} onChange={e=> setConfirmPassword(e.target.value)}/>
+        </label>
+        <label>
+            Email: 
+            <input type="Email" value={email} onChange={e=> setEmail(e.target.value)}/>
+        </label>
+        <label>
+            Birthday: 
+            <input type="Birthday" value={Birthday} onChange={e=> setBirthday(e.target.value)}/>
+        </label>
+            <button type="submit" onClick={handleSubmit}>Submit</button>
+    </form>
 );
 }
 
@@ -77,15 +57,4 @@ RegistrationView.propTypes = {
   };
 
 
-
-
-
-
-
-
-
-
-
-
-// <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-// <Button variant="secondary" type="submit" onClick={newUser}>Register</Button>
+  

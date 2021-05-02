@@ -6,10 +6,6 @@ import { LoginView} from '../login-view/login-view'
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/MovieView'
-import { Container } from 'react-bootstrap';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
 
 export class MainView extends React.Component{
 
@@ -72,34 +68,23 @@ export class MainView extends React.Component{
         if (movies.length === 0) return <div className="main-view"/>;
 
         return (
-            <Container fluid>
-                <Row className="main-view">
-                      {selectedMovie
-                        ? (
+            <div className="main-view">
+                <div>MyFlixApplication</div>
                 
-                            <Col md={1}>
-                                <MovieView  movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectMovie(newSelectedMovie); }}/>
-                            </Col>
- 
-                        )
-                        : (
-                            movies.map(movie => (
-                                    <Col md={3}> 
-                                        <MovieCard 
-                                            key={movie._id} 
-                                            movieData={movie} 
-                                            onMovieClick={newSelectedMovie => { 
-                                                this.setSelectMovie(newSelectedMovie); 
-                                            }}
-                                        />
-                                    </Col>
-                            ))
+                {selectedMovie
+                    ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectMovie(newSelectedMovie); }}/>
 
-                           
-                    )
+                    : movies.map(
+                        movie =>{
+                            return  <MovieCard 
+                                key={movie._id} 
+                                movieData={movie} 
+                                onMovieClick={(movie) => {this.setSelectMovie(movie)}} 
+                                />
+                            })
                 }
-                </Row> 
-            </Container> //movieData is the promp?????????,
+                       
+            </div> //movieData is the promp?????????
         );
     }
 
