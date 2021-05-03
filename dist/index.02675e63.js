@@ -26420,7 +26420,9 @@ try {
             columnNumber: 33
           }
         })) : movies.map(movie => /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapColDefault.default, {
-          md: 3,
+          lg: 3,
+          md: 4,
+          sm: 6,
           __self: this,
           __source: {
             fileName: _jsxFileName,
@@ -31049,7 +31051,7 @@ try {
       return (
         /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapCardDefault.default, {
           style: {
-            width: '20rem'
+            width: '15rem'
           },
           className: "movie-card",
           __self: this,
@@ -31081,14 +31083,7 @@ try {
             lineNumber: 16,
             columnNumber: 15
           }
-        }, movieData.Title), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapCardDefault.default.Text, {
-          __self: this,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 17,
-            columnNumber: 15
-          }
-        }, movieData.Description)), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapButtonDefault.default, {
+        }, movieData.Title)), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapButtonDefault.default, {
           variant: "primary",
           onClick: () => onMovieClick(movieData),
           __self: this,
@@ -31097,14 +31092,20 @@ try {
             lineNumber: 19,
             columnNumber: 13
           }
-        }, "Open"))
+        }, "Open"), /*#__PURE__*/_reactDefault.default.createElement("br", {
+          __self: this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 20,
+            columnNumber: 13
+          }
+        }))
       );
     }
   }
   MovieCard.propTypes = {
     movieData: _propTypesDefault.default.shape({
       Title: _propTypesDefault.default.string.isRequired,
-      Description: _propTypesDefault.default.string.isRequired,
       ImagePath: _propTypesDefault.default.string.isRequired
     }).isRequired,
     onMovieClick: _propTypesDefault.default.func.isRequired

@@ -10,13 +10,14 @@ export class MovieCard extends React.Component{
      
     return (
    
-            <Card style={{ width: '20rem' }} className="movie-card">
+            <Card style={{ width: '15rem' }} className="movie-card">
             <Card.Body>
               <Card.Img variant="top" src={movieData.ImagePath} />
               <Card.Title>{movieData.Title}</Card.Title>
-              <Card.Text>{movieData.Description}</Card.Text>
+
             </Card.Body>
             <Button variant="primary" onClick={()=> onMovieClick(movieData)}>Open</Button>
+            <br></br>
            </Card>    
     );  
   }
@@ -25,7 +26,7 @@ export class MovieCard extends React.Component{
 MovieCard.propTypes = {
   movieData: PropTypes.shape({
     Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
+    
     ImagePath: PropTypes.string.isRequired
   }).isRequired,
   onMovieClick: PropTypes.func.isRequired
