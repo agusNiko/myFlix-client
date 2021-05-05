@@ -6,6 +6,8 @@ import { LoginView} from '../login-view/login-view'
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/MovieView'
+import  Header  from '../header/header';
+
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -61,6 +63,8 @@ export class MainView extends React.Component{
     render() {
         //const movies = this.state.movies; /////// instead of this expression we use the "object destruction"
         const { movies, selectedMovie, user } = this.state; // What is the object destruction? I did not understand 
+
+        
        
         if (user === 'newUser') return <RegistrationView onRegistration={user => this.onRegistration(user)}/>
        
@@ -73,7 +77,9 @@ export class MainView extends React.Component{
 
         return (
             <Container fluid>
+             <Header/>
                 <Row className="main-view">
+    
                       {selectedMovie
                         ? (
                 
