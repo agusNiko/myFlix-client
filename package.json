@@ -4,7 +4,10 @@
   "description": "myFlix client-side with react",
   "main": "src/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rmdir -rf dist && parcel build src/index.html --public-url ./",
+    "predeploy": "rmdir -rf dist && parcel build src/index.html --public-url https://agusNiko.github.io/myFlix-client/ ",
+    "deploy": "gh-pages -d dist"
   },
   "author": "agus",
   "license": "ISC",
