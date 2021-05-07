@@ -37,6 +37,23 @@ export class MainView extends React.Component{
                 console.log(error);
             });
     }
+    
+    getMovies(token){
+        axios.get('https://myflapix.herokuapp.com/movies', {
+            headers: { Authorization: `Bearer ${token}`}
+        })
+        .then(response =>{
+            //assign the result to the state
+            this.setState({
+                movies:response.data
+            });
+        })
+        .cath(function(error){
+            console.log(error);
+        });
+    }
+
+
 
     setSelectMovie(newSelectedMovie){
         this.setState({
@@ -46,10 +63,15 @@ export class MainView extends React.Component{
 
     /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
    
-    onLoggedIn(user) {
+    onLoggedIn(authData) {
+        console.log(authData)
         this.setState({
-            user
+            user:authData.user.Username
         });
+
+        localStorage.setItem('token', authData.token);
+        localStorage.setItem('user', authDAta.user.Username);
+        this.getMovies(authData.token);
     }
 
     onRegistration(user) {
@@ -76,7 +98,7 @@ export class MainView extends React.Component{
         if (movies.length === 0) return <div className="main-view"/>;
 
         return (
-            <Container fluid>
+            <Container>
              <Header/>
                 <Row className="main-view">
     
