@@ -26321,13 +26321,13 @@ try {
       };
     }
     componentDidMount() {
-      _axiosDefault.default.get('https://myflapix.herokuapp.com/movies').then(response => {
+      let accessToken = localStorage.getItem('token');
+      if (accessToken !== null) {
         this.setState({
-          movies: response.data
+          user: localStorage.getItem('user')
         });
-      }).catch(error => {
-        console.log(error);
-      });
+        this.getMovies(accessToken);
+      }
     }
     getMovies(token) {
       _axiosDefault.default.get('https://myflapix.herokuapp.com/movies', {
@@ -26335,11 +26335,11 @@ try {
           Authorization: `Bearer ${token}`
         }
       }).then(response => {
-        // assign the result to the state
+        // Assign the result to the state
         this.setState({
           movies: response.data
         });
-      }).cath(function (error) {
+      }).catch(function (error) {
         console.log(error);
       });
     }
@@ -26355,12 +26355,22 @@ try {
         user: authData.user.Username
       });
       localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', authDAta.user.Username);
+      localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
     }
     onRegistration(user) {
       this.setState({
         user
+      });
+      localStorage.setItem('token', authData.token);
+      localStorage.setItem('user', authData.user.Username);
+      this.getMovies(authData.token);
+    }
+    onLoggedOut() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      this.setState({
+        user: null
       });
     }
     render() {
@@ -26373,23 +26383,36 @@ try {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 91,
+            lineNumber: 95,
             columnNumber: 40
           }
         })
       );
       /*If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
-      if (!user) return (
-        /*#__PURE__*/_reactDefault.default.createElement(_loginViewLoginView.LoginView, {
-          onLoggedIn: user => this.onLoggedIn(user),
-          __self: this,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 94,
-            columnNumber: 26
-          }
-        })
-      );
+      if (!user) return;
+      /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapRowDefault.default, {
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 99,
+          columnNumber: 9
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapColDefault.default, {
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 100,
+          columnNumber: 13
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement(_loginViewLoginView.LoginView, {
+        onLoggedIn: user => this.onLoggedIn(user),
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 101,
+          columnNumber: 13
+        }
+      }), ";"));
       // if (selectedMovie) return <MovieView movie={selectedMovie}/>
       if (movies.length === 0) return (
         /*#__PURE__*/_reactDefault.default.createElement("div", {
@@ -26397,7 +26420,7 @@ try {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 98,
+            lineNumber: 106,
             columnNumber: 41
           }
         })
@@ -26407,22 +26430,32 @@ try {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 101,
+            lineNumber: 109,
             columnNumber: 13
           }
         }, /*#__PURE__*/_reactDefault.default.createElement(_headerHeaderDefault.default, {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 102,
+            lineNumber: 110,
             columnNumber: 14
           }
-        }), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapRowDefault.default, {
+        }), /*#__PURE__*/_reactDefault.default.createElement("button", {
+          onClick: () => {
+            this.onLoggedOut();
+          },
+          __self: this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 111,
+            columnNumber: 14
+          }
+        }, "Logout"), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapRowDefault.default, {
           className: "main-view",
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 103,
+            lineNumber: 112,
             columnNumber: 17
           }
         }, selectedMovie ? /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapColDefault.default, {
@@ -26430,7 +26463,7 @@ try {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 108,
+            lineNumber: 117,
             columnNumber: 29
           }
         }, /*#__PURE__*/_reactDefault.default.createElement(_movieViewMovieView.MovieView, {
@@ -26441,7 +26474,7 @@ try {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 109,
+            lineNumber: 118,
             columnNumber: 33
           }
         })) : movies.map(movie => /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapColDefault.default, {
@@ -26451,7 +26484,7 @@ try {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 115,
+            lineNumber: 124,
             columnNumber: 37
           }
         }, /*#__PURE__*/_reactDefault.default.createElement(_movieCardMovieCard.MovieCard, {
@@ -26463,7 +26496,7 @@ try {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 116,
+            lineNumber: 125,
             columnNumber: 41
           }
         })))))
@@ -28242,12 +28275,13 @@ try {
   var _reactBootstrapFormDefault = _parcelHelpers.interopDefault(_reactBootstrapForm);
   var _reactBootstrapButton = require('react-bootstrap/Button');
   var _reactBootstrapButtonDefault = _parcelHelpers.interopDefault(_reactBootstrapButton);
+  var _reactBootstrapInputGroup = require('react-bootstrap/InputGroup');
+  var _reactBootstrapInputGroupDefault = _parcelHelpers.interopDefault(_reactBootstrapInputGroup);
   var _jsxFileName = "C:\\Users\\anps8\\Documents\\careerfoundry\\myFlix-client\\src\\components\\login-view\\login-view.jsx", _s = $RefreshSig$();
   function LoginView(props) {
     _s();
     const [username, setUsername] = _react.useState('');
     const [password, setPassword] = _react.useState('');
-    // ------ I am going to eliminate the passport from the log in endpoint of my-movie app !!!!------->
     const handleSubmit = e => {
       e.preventDefault();
       /*Send a request to the server for authentication*/
@@ -28261,13 +28295,6 @@ try {
         console.log('no such user');
       });
     };
-    // const handleSubmit = (e) => {
-    // e.preventDefault();
-    // console.log(username, password);
-    // /* Send a request to the server for authentication */
-    // /* then call props.onLoggedIn(username), which provides the username to our parent component (child to parent communication) */
-    // props.onLoggedIn(username)
-    // };
     const newUser = e => {
       e.preventDefault();
       console.log(username, password);
@@ -28278,67 +28305,103 @@ try {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 47,
+          lineNumber: 41,
           columnNumber: 5
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapInputGroupDefault.default, {
+        hasValidation: true,
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 43,
+          columnNumber: 7
         }
       }, /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Group, {
         controlId: "formUsername",
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 48,
+          lineNumber: 44,
           columnNumber: 7
         }
       }, /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Label, {
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 45,
+          columnNumber: 9
+        }
+      }, "Username:"), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Control, {
+        type: "text",
+        required: true,
+        isInvalid: true,
+        value: username,
+        onChange: e => setUsername(e.target.value),
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 48,
+          columnNumber: 9
+        }
+      }), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Control.Feedback, {
+        type: "invalid",
         __self: this,
         __source: {
           fileName: _jsxFileName,
           lineNumber: 49,
           columnNumber: 9
         }
-      }, "Username:"), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Control, {
-        type: "text",
-        value: username,
-        onChange: e => setUsername(e.target.value),
+      }, "Please add your Username"))), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapInputGroupDefault.default, {
+        hasValidation: true,
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 52,
-          columnNumber: 9
+          lineNumber: 55,
+          columnNumber: 7
         }
-      })), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Group, {
+      }, /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Group, {
         controlId: "formPassword",
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 54,
+          lineNumber: 56,
           columnNumber: 7
         }
       }, /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Label, {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 55,
+          lineNumber: 57,
           columnNumber: 9
         }
       }, "Password:"), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Control, {
         type: "password",
+        isInvalid: true,
+        required: true,
         value: password,
         onChange: e => setPassword(e.target.value),
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 58,
+          lineNumber: 60,
           columnNumber: 9
         }
-      })), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapButtonDefault.default, {
+      }), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapFormDefault.default.Control.Feedback, {
+        type: "invalid",
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 61,
+          columnNumber: 9
+        }
+      }, "Please add your Password"))), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapButtonDefault.default, {
         variant: "primary",
         type: "submit",
         onClick: handleSubmit,
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 61,
+          lineNumber: 67,
           columnNumber: 7
         }
       }, "Submit"), /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapButtonDefault.default, {
@@ -28348,7 +28411,7 @@ try {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 62,
+          lineNumber: 68,
           columnNumber: 7
         }
       }, "Register"))
@@ -28369,7 +28432,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","@parcel/transformer-js/lib/esmodule-helpers.js":"7kyIT","../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7belF","axios":"7rA65"}],"4dfy5":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","@parcel/transformer-js/lib/esmodule-helpers.js":"7kyIT","../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7belF","axios":"7rA65","react-bootstrap/InputGroup":"3nb5C"}],"4dfy5":[function(require,module,exports) {
 /**
 * Copyright (c) 2013-present, Facebook, Inc.
 *
@@ -30866,7 +30929,80 @@ function registerExportsForReactRefresh(module) {
   }
 }
 
-},{"react-refresh/runtime":"2YxSG"}],"7gvH2":[function(require,module,exports) {
+},{"react-refresh/runtime":"2YxSG"}],"3nb5C":[function(require,module,exports) {
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _createWithBsPrefix = _interopRequireDefault(require("./createWithBsPrefix"));
+
+var _ThemeProvider = require("./ThemeProvider");
+
+var InputGroupAppend = (0, _createWithBsPrefix.default)('input-group-append');
+var InputGroupPrepend = (0, _createWithBsPrefix.default)('input-group-prepend');
+var InputGroupText = (0, _createWithBsPrefix.default)('input-group-text', {
+  Component: 'span'
+});
+
+var InputGroupCheckbox = function InputGroupCheckbox(props) {
+  return /*#__PURE__*/_react.default.createElement(InputGroupText, null, /*#__PURE__*/_react.default.createElement("input", (0, _extends2.default)({
+    type: "checkbox"
+  }, props)));
+};
+
+var InputGroupRadio = function InputGroupRadio(props) {
+  return /*#__PURE__*/_react.default.createElement(InputGroupText, null, /*#__PURE__*/_react.default.createElement("input", (0, _extends2.default)({
+    type: "radio"
+  }, props)));
+};
+
+/**
+ *
+ * @property {InputGroupAppend} Append
+ * @property {InputGroupPrepend} Prepend
+ * @property {InputGroupText} Text
+ * @property {InputGroupRadio} Radio
+ * @property {InputGroupCheckbox} Checkbox
+ */
+var InputGroup = /*#__PURE__*/_react.default.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      size = _ref.size,
+      hasValidation = _ref.hasValidation,
+      className = _ref.className,
+      _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'div' : _ref$as,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "size", "hasValidation", "className", "as"]);
+  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'input-group');
+  return /*#__PURE__*/_react.default.createElement(Component, (0, _extends2.default)({
+    ref: ref
+  }, props, {
+    className: (0, _classnames.default)(className, bsPrefix, size && bsPrefix + "-" + size, hasValidation && 'has-validation')
+  }));
+});
+
+InputGroup.displayName = 'InputGroup';
+var InputGroupWithExtras = (0, _extends2.default)({}, InputGroup, {
+  Text: InputGroupText,
+  Radio: InputGroupRadio,
+  Checkbox: InputGroupCheckbox,
+  Append: InputGroupAppend,
+  Prepend: InputGroupPrepend
+});
+var _default = InputGroupWithExtras;
+exports.default = _default;
+module.exports = exports["default"];
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","@babel/runtime/helpers/extends":"3krLJ","classnames":"5aJRc","react":"3b2NM","./createWithBsPrefix":"2oVVc","./ThemeProvider":"4rz1S"}],"7gvH2":[function(require,module,exports) {
 var helpers = require("../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -38594,80 +38730,7 @@ var FigureCaption = (0, _createWithBsPrefix.default)('figure-caption', {
 var _default = FigureCaption;
 exports.default = _default;
 module.exports = exports["default"];
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","./createWithBsPrefix":"2oVVc"}],"3nb5C":[function(require,module,exports) {
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-
-var _classnames = _interopRequireDefault(require("classnames"));
-
-var _react = _interopRequireDefault(require("react"));
-
-var _createWithBsPrefix = _interopRequireDefault(require("./createWithBsPrefix"));
-
-var _ThemeProvider = require("./ThemeProvider");
-
-var InputGroupAppend = (0, _createWithBsPrefix.default)('input-group-append');
-var InputGroupPrepend = (0, _createWithBsPrefix.default)('input-group-prepend');
-var InputGroupText = (0, _createWithBsPrefix.default)('input-group-text', {
-  Component: 'span'
-});
-
-var InputGroupCheckbox = function InputGroupCheckbox(props) {
-  return /*#__PURE__*/_react.default.createElement(InputGroupText, null, /*#__PURE__*/_react.default.createElement("input", (0, _extends2.default)({
-    type: "checkbox"
-  }, props)));
-};
-
-var InputGroupRadio = function InputGroupRadio(props) {
-  return /*#__PURE__*/_react.default.createElement(InputGroupText, null, /*#__PURE__*/_react.default.createElement("input", (0, _extends2.default)({
-    type: "radio"
-  }, props)));
-};
-
-/**
- *
- * @property {InputGroupAppend} Append
- * @property {InputGroupPrepend} Prepend
- * @property {InputGroupText} Text
- * @property {InputGroupRadio} Radio
- * @property {InputGroupCheckbox} Checkbox
- */
-var InputGroup = /*#__PURE__*/_react.default.forwardRef(function (_ref, ref) {
-  var bsPrefix = _ref.bsPrefix,
-      size = _ref.size,
-      hasValidation = _ref.hasValidation,
-      className = _ref.className,
-      _ref$as = _ref.as,
-      Component = _ref$as === void 0 ? 'div' : _ref$as,
-      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "size", "hasValidation", "className", "as"]);
-  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'input-group');
-  return /*#__PURE__*/_react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, bsPrefix, size && bsPrefix + "-" + size, hasValidation && 'has-validation')
-  }));
-});
-
-InputGroup.displayName = 'InputGroup';
-var InputGroupWithExtras = (0, _extends2.default)({}, InputGroup, {
-  Text: InputGroupText,
-  Radio: InputGroupRadio,
-  Checkbox: InputGroupCheckbox,
-  Append: InputGroupAppend,
-  Prepend: InputGroupPrepend
-});
-var _default = InputGroupWithExtras;
-exports.default = _default;
-module.exports = exports["default"];
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","@babel/runtime/helpers/extends":"3krLJ","classnames":"5aJRc","react":"3b2NM","./createWithBsPrefix":"2oVVc","./ThemeProvider":"4rz1S"}],"1fO3T":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","./createWithBsPrefix":"2oVVc"}],"1fO3T":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -43046,10 +43109,14 @@ try {
   _parcelHelpers.defineInteropFlag(exports);
   var _react = require('react');
   var _reactDefault = _parcelHelpers.interopDefault(_react);
+  require('react-bootstrap/esm/Image');
   var _reactBootstrapNavbar = require('react-bootstrap/Navbar');
   var _reactBootstrapNavbarDefault = _parcelHelpers.interopDefault(_reactBootstrapNavbar);
   var _jsxFileName = "C:\\Users\\anps8\\Documents\\careerfoundry\\myFlix-client\\src\\components\\header\\header.jsx";
   function Header() {
+    const loggedOut = () => {
+      props.onLoggedOut();
+    };
     return (
       /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapNavbarDefault.default, {
         bg: "dark",
@@ -43057,7 +43124,7 @@ try {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 7,
+          lineNumber: 13,
           columnNumber: 12
         }
       }, /*#__PURE__*/_reactDefault.default.createElement(_reactBootstrapNavbarDefault.default.Brand, {
@@ -43065,27 +43132,23 @@ try {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 8,
-          columnNumber: 15
+          lineNumber: 14,
+          columnNumber: 13
         }
-      }, /*#__PURE__*/_reactDefault.default.createElement("img", {
-        alt: "",
-        src: "/logo.svg",
-        width: "30",
-        height: "30",
-        className: "d-inline-block align-top",
+      }, 'myFlipapix'), /*#__PURE__*/_reactDefault.default.createElement("button", {
+        onClick: loggedOut,
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 9,
-          columnNumber: 17
+          lineNumber: 17,
+          columnNumber: 13
         }
-      }), ' ', "React Bootstrap"), /*#__PURE__*/_reactDefault.default.createElement("br", {
+      }, "Logout"), /*#__PURE__*/_reactDefault.default.createElement("br", {
         __self: this,
         __source: {
           fileName: _jsxFileName,
           lineNumber: 18,
-          columnNumber: 15
+          columnNumber: 13
         }
       }))
     );
@@ -43100,6 +43163,159 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","react-bootstrap/Navbar":"3qLFd","@parcel/transformer-js/lib/esmodule-helpers.js":"7kyIT","../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7belF"}],"5iJih":[function() {},{}]},["1j6wU","68WUB","1DVjT"], "1DVjT", "parcelRequire279c")
+},{"react":"3b2NM","react-bootstrap/Navbar":"3qLFd","@parcel/transformer-js/lib/esmodule-helpers.js":"7kyIT","../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7belF","react-bootstrap/esm/Image":"rzPO3"}],"rzPO3":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "propTypes", function () {
+  return propTypes;
+});
+var _babelRuntimeHelpersEsmExtends = require("@babel/runtime/helpers/esm/extends");
+var _babelRuntimeHelpersEsmExtendsDefault = _parcelHelpers.interopDefault(_babelRuntimeHelpersEsmExtends);
+var _babelRuntimeHelpersEsmObjectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
+var _babelRuntimeHelpersEsmObjectWithoutPropertiesLooseDefault = _parcelHelpers.interopDefault(_babelRuntimeHelpersEsmObjectWithoutPropertiesLoose);
+var _classnames = require('classnames');
+var _classnamesDefault = _parcelHelpers.interopDefault(_classnames);
+var _react = require('react');
+var _reactDefault = _parcelHelpers.interopDefault(_react);
+var _propTypes = require('prop-types');
+var _propTypesDefault = _parcelHelpers.interopDefault(_propTypes);
+var _ThemeProvider = require('./ThemeProvider');
+var propTypes = {
+  /**
+  * @default 'img'
+  */
+  bsPrefix: _propTypesDefault.default.string,
+  /**
+  * Sets image as fluid image.
+  */
+  fluid: _propTypesDefault.default.bool,
+  /**
+  * Sets image shape as rounded.
+  */
+  rounded: _propTypesDefault.default.bool,
+  /**
+  * Sets image shape as circle.
+  */
+  roundedCircle: _propTypesDefault.default.bool,
+  /**
+  * Sets image shape as thumbnail.
+  */
+  thumbnail: _propTypesDefault.default.bool
+};
+var defaultProps = {
+  fluid: false,
+  rounded: false,
+  roundedCircle: false,
+  thumbnail: false
+};
+var Image = /*#__PURE__*/_reactDefault.default.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix, className = _ref.className, fluid = _ref.fluid, rounded = _ref.rounded, roundedCircle = _ref.roundedCircle, thumbnail = _ref.thumbnail, props = _babelRuntimeHelpersEsmObjectWithoutPropertiesLooseDefault.default(_ref, ["bsPrefix", "className", "fluid", "rounded", "roundedCircle", "thumbnail"]);
+  bsPrefix = _ThemeProvider.useBootstrapPrefix(bsPrefix, 'img');
+  var classes = _classnamesDefault.default(fluid && bsPrefix + "-fluid", rounded && "rounded", roundedCircle && "rounded-circle", thumbnail && bsPrefix + "-thumbnail");
+  return (
+    /*#__PURE__*/_reactDefault.default.createElement("img", _babelRuntimeHelpersEsmExtendsDefault.default({
+      // eslint-disable-line jsx-a11y/alt-text
+      ref: ref
+    }, props, {
+      className: _classnamesDefault.default(className, classes)
+    }))
+  );
+});
+Image.displayName = 'Image';
+Image.defaultProps = defaultProps;
+exports.default = Image;
+
+},{"@babel/runtime/helpers/esm/extends":"5qnVv","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"6rNIl","classnames":"5aJRc","react":"3b2NM","prop-types":"4dfy5","./ThemeProvider":"6Pzum","@parcel/transformer-js/lib/esmodule-helpers.js":"7kyIT"}],"5qnVv":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+function _extends() {
+  _extends = Object.assign || (function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  });
+  return _extends.apply(this, arguments);
+}
+exports.default = _extends;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"7kyIT"}],"6rNIl":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
+exports.default = _objectWithoutPropertiesLoose;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"7kyIT"}],"6Pzum":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "useBootstrapPrefix", function () {
+  return useBootstrapPrefix;
+});
+_parcelHelpers.export(exports, "createBootstrapComponent", function () {
+  return createBootstrapComponent;
+});
+_parcelHelpers.export(exports, "ThemeConsumer", function () {
+  return Consumer;
+});
+var _babelRuntimeHelpersEsmExtends = require("@babel/runtime/helpers/esm/extends");
+var _babelRuntimeHelpersEsmExtendsDefault = _parcelHelpers.interopDefault(_babelRuntimeHelpersEsmExtends);
+var _react = require('react');
+var _reactDefault = _parcelHelpers.interopDefault(_react);
+var ThemeContext = /*#__PURE__*/_reactDefault.default.createContext({});
+var Consumer = ThemeContext.Consumer, Provider = ThemeContext.Provider;
+function ThemeProvider(_ref) {
+  var prefixes = _ref.prefixes, children = _ref.children;
+  var copiedPrefixes = _react.useMemo(function () {
+    return _babelRuntimeHelpersEsmExtendsDefault.default({}, prefixes);
+  }, [prefixes]);
+  return (
+    /*#__PURE__*/_reactDefault.default.createElement(Provider, {
+      value: copiedPrefixes
+    }, children)
+  );
+}
+function useBootstrapPrefix(prefix, defaultPrefix) {
+  var prefixes = _react.useContext(ThemeContext);
+  return prefix || prefixes[defaultPrefix] || defaultPrefix;
+}
+function createBootstrapComponent(Component, opts) {
+  if (typeof opts === 'string') opts = {
+    prefix: opts
+  };
+  var isClassy = Component.prototype && Component.prototype.isReactComponent;
+  // If it's a functional component make sure we don't break it with a ref
+  var _opts = opts, prefix = _opts.prefix, _opts$forwardRefAs = _opts.forwardRefAs, forwardRefAs = _opts$forwardRefAs === void 0 ? isClassy ? 'ref' : 'innerRef' : _opts$forwardRefAs;
+  var Wrapped = /*#__PURE__*/_reactDefault.default.forwardRef(function (_ref2, ref) {
+    var props = _babelRuntimeHelpersEsmExtendsDefault.default({}, _ref2);
+    props[forwardRefAs] = ref;
+    var bsPrefix = useBootstrapPrefix(props.bsPrefix, prefix);
+    return (
+      /*#__PURE__*/_reactDefault.default.createElement(Component, _babelRuntimeHelpersEsmExtendsDefault.default({}, props, {
+        bsPrefix: bsPrefix
+      }))
+    );
+  });
+  Wrapped.displayName = "Bootstrap(" + (Component.displayName || Component.name) + ")";
+  return Wrapped;
+}
+exports.default = ThemeProvider;
+
+},{"@babel/runtime/helpers/esm/extends":"5qnVv","react":"3b2NM","@parcel/transformer-js/lib/esmodule-helpers.js":"7kyIT"}],"5iJih":[function() {},{}]},["1j6wU","68WUB","1DVjT"], "1DVjT", "parcelRequire279c")
 
 //# sourceMappingURL=index.02675e63.js.map

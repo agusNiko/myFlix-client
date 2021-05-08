@@ -1,26 +1,22 @@
 import React from 'react';
+import { propTypes } from 'react-bootstrap/esm/Image';
 import Navbar from 'react-bootstrap/Navbar';
 
 function Header() {
+
+  const loggedOut = () => {
+    props.onLoggedOut()
+
+  }
    
         return (
            <Navbar bg="dark" variant="dark">
-              <Navbar.Brand href="#home">
-                <img
-                  alt=""
-                  src="/logo.svg"
-                  width="30"
-                  height="30"
-                  className="d-inline-block align-top"
-                />{' '}
-                React Bootstrap
-              </Navbar.Brand>
-              <br/>
-            </Navbar>
-
-          
-
-
+            <Navbar.Brand href="#home">
+            {'myFlipapix'}
+            </Navbar.Brand>
+            <button onClick={loggedOut}>Logout</button>
+            <br/>
+          </Navbar>
         );
 
 }

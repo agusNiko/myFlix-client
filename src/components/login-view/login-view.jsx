@@ -4,6 +4,8 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup'
+
 
 
 export function LoginView(props) {
@@ -11,7 +13,7 @@ export function LoginView(props) {
   const [ password, setPassword ] = useState('');
 
 
-  //------ I am going to eliminate the passport from the log in endpoint of my-movie app !!!!------->
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,14 +31,6 @@ export function LoginView(props) {
     });
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(username, password);
-  //   /* Send a request to the server for authentication */
-  //   /* then call props.onLoggedIn(username), which provides the username to our parent component (child to parent communication) */
-  //   props.onLoggedIn(username)
-  // };
-
   const newUser = (e) =>{
     e.preventDefault();
     console.log(username, password);
@@ -45,19 +39,31 @@ export function LoginView(props) {
 
   return (
     <form>
-      <Form.Group controlId="formUsername">
+
+      <InputGroup hasValidation> 
+      <Form.Group  controlId="formUsername">
         <Form.Label>
           Username:
         </Form.Label>
-        <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} />
+        <Form.Control  type="text" required isInvalid value={username} onChange={e => setUsername(e.target.value)} />
+        <Form.Control.Feedback type="invalid">
+          Please add your Username
+        </Form.Control.Feedback>
       </Form.Group>
+      </InputGroup>
+
+      <InputGroup hasValidation>
       <Form.Group controlId="formPassword">
         <Form.Label>
         Password:
         </Form.Label>
-        <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      
+        <Form.Control type="password" isInvalid required value={password} onChange={e => setPassword(e.target.value)} />
+        <Form.Control.Feedback type="invalid">
+          Please add your Password
+        </Form.Control.Feedback>
       </Form.Group>
+      </InputGroup>
+
       <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
       <Button variant="secondary" type="submit" onClick={newUser}>Register</Button>
     </form>
