@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup'
 
 
+import { Link } from "react-router-dom";
+
 
 export function LoginView(props) {
   const [ username, setUsername ] = useState('');
@@ -33,8 +35,7 @@ export function LoginView(props) {
 
   const newUser = (e) =>{
     e.preventDefault();
-    console.log(username, password);
-      props.onLoggedIn('newUser');
+      props.onRegistration('newUser');
   };
 
   return (
@@ -65,7 +66,14 @@ export function LoginView(props) {
       </InputGroup>
 
       <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-      <Button variant="secondary" type="submit" onClick={newUser}>Register</Button>
+
+
+
+      <Link to={`/register`}>
+        <Button  variant="secondary" type="submit">Register</Button>
+      </Link>
+
+
     </form>
   );
 }

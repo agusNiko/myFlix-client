@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+
 
 
 
@@ -10,12 +12,12 @@ export function RegistrationView(props) {
     const [ password, setPassword ] = useState('');
     const [ confirmPassword, setConfirmPassword ] = useState('');
     const [ email, setEmail] = useState('');
-    const [ Birthday, setBirthday ] = useState('');
+    const [ birthday, setBirthday ] = useState('');
 
 
     const handleSubmit = (e) => {
      e.preventDefault();
-        console.log(username, password, confirmPassword, email, Birthday); //
+        console.log(username, password, confirmPassword, email, birthday); //
         axios.post('https://myflapix.herokuapp.com/users', {
           Username: username,
           Password: password,
@@ -31,7 +33,6 @@ export function RegistrationView(props) {
           console.log('error registering the user')
         });
       };
-
 
 return (
     <form>
@@ -61,7 +62,7 @@ return (
   <Form.Label>
   Birthday:
   </Form.Label>
-  <Form.Control type="Birthday" value={Birthday} onChange={e => setBirthday(e.target.value)} />
+  <Form.Control type="Birthday" value={birthday} onChange={e => setBirthday(e.target.value)} />
 </Form.Group>
 
 
@@ -69,7 +70,7 @@ return (
   <Form.Label>
   Email: 
   </Form.Label>
-  <Form.Control type="Email" value={Birthday} onChange={e => setEmail(e.target.value)} />
+  <Form.Control type="Email" value={email} onChange={e => setEmail(e.target.value)} />
 </Form.Group>
      
 <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
