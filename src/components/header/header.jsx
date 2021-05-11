@@ -16,7 +16,7 @@ function Header(props) {
             <Navbar.Brand href="#home">
             {'myFlipapix'}
             </Navbar.Brand>
-            <button onClick={logout}>Logout</button>
+            <button variant="secondary" onClick={logout}>Logout</button>
        
             <Link to={`/profile`}>
                     <Button variant="secondary">Profile</Button>

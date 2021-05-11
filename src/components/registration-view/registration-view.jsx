@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-
+import { Link } from "react-router-dom";
 
 
 export function RegistrationView(props) {
@@ -27,7 +27,9 @@ export function RegistrationView(props) {
         .then(response => {
           const data = response.data;
           console.log(data);
+          alert('registration Successful')
           window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+          
         })
         .catch(e => {
           console.log('error registering the user')
@@ -74,6 +76,11 @@ return (
 </Form.Group>
      
 <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
+
+<Link to={`/`}>
+  <Button variant="secondary">Back to login</Button>
+</Link>
+
 </form>
 
 );

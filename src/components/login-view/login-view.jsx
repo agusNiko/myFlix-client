@@ -33,10 +33,7 @@ export function LoginView(props) {
     });
   };
 
-  const newUser = (e) =>{
-    e.preventDefault();
-      props.onRegistration('newUser');
-  };
+
 
   return (
     <form>

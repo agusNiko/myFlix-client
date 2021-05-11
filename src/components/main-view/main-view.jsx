@@ -74,6 +74,23 @@ export class MainView extends React.Component{
       });
     }
 
+    //I am working here
+    unRegister(token){
+
+      axios.delete(`https://myflapix.herokuapp.com//users/${localStorage.user}`, {
+        headers: { Authorization: `Bearer ${token}`}
+      })
+      .then(response => {
+        // Assign the result to the state
+        this.setState({
+          onLoggedOut()
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
 
     setSelectMovie(newSelectedMovie){
         this.setState({
@@ -110,12 +127,13 @@ export class MainView extends React.Component{
       return (
     
       <Router>
-         <Header onLogOut={this.onLoggedOut}/>
+
+      <Header onLogOut={() => { this.onLoggedOut() }}/>
         
         <Container>
-      
-        <button onClick={() => { this.onLoggedOut() }}>Logout</button> 
-               
+
+        
+
         <Row className="main-view">
      
           <Route exact path="/" render={() => {
@@ -127,10 +145,13 @@ export class MainView extends React.Component{
             </Col>
             </Row>
 
-            return movies.map(m => (
+            return movies.map(m => (     
+                       
               <Col lg={3} md={4} sm={6} key={m._id}>
+
                 <MovieCard movieData={m} />
               </Col>
+                    
             ))
           }}/>
 

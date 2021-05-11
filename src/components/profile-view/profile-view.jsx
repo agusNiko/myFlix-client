@@ -32,6 +32,8 @@ export class ProfileView extends React.Component{
                 </Link> */}
 
                 <Button variant="primary" onClick={()=> onBackClick(null)}>Back</Button>
+
+                <Button variant="primary" onClick={}>Unregister</Button>
             
             </Card>
         );
