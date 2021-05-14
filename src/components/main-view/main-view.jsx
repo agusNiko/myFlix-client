@@ -183,8 +183,7 @@ export class MainView extends React.Component{
               <Col lg={3} md={4} sm={6} key={m._id}>
 
                 <MovieCard movieData={m} />
-              </Col>
-                    
+              </Col> 
             ))
           }}/>
 
@@ -204,6 +203,7 @@ export class MainView extends React.Component{
                 onBackClick={() => history.goBack()} 
                 toFavoriteMovie={(movieId)=> {this.addToFavorites(movieId)}}
                 removeFavoriteMovie={(movieId)=> {this.removeMovie(movieId)}}
+                userData = {userData}
                 />
             </Col>
           }}/>
