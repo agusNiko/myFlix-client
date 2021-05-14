@@ -7,9 +7,11 @@ import { Link } from "react-router-dom";
 
 export class MovieView extends React.Component{
 
+
     render(){
 
-        const {movie, onBackClick} = this.props;
+        const {movie, onBackClick, toFavoriteMovie, removeFavoriteMovie} = this.props;
+      
         return (
             <Card style={{ width: '20rem' }} className="justify-content-md-center" className="movie-view">
                 <Card.Body>
@@ -17,9 +19,6 @@ export class MovieView extends React.Component{
                     <Card.Title>{movie.Title}</Card.Title>
                     <Card.Text>{movie.Description}</Card.Text>
                 </Card.Body>
-                <Link to={`/`}>
-                    <Button variant="secondary">Main View</Button>
-                </Link>
     
                 <Link to={`/directors/${movie.Director.Name}`}>
                     <Button variant="link">Director</Button>
@@ -30,6 +29,12 @@ export class MovieView extends React.Component{
                 </Link>
 
                 <Button variant="primary" onClick={()=> onBackClick(null)}>Back</Button>
+
+                <Button variant="btn btn-success" onClick={() => toFavoriteMovie(movie._id)}>add to favorites</Button>
+
+                <Button variant="secondary" onClick={() => removeFavoriteMovie(movie._id)}>remove from favorites</Button>
+
+
             
             </Card>
         );

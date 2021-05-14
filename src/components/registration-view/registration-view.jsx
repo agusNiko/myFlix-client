@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 import { Link } from "react-router-dom";
+import { Container } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup'
 
 
 export function RegistrationView(props) {
@@ -13,6 +16,7 @@ export function RegistrationView(props) {
     const [ confirmPassword, setConfirmPassword ] = useState('');
     const [ email, setEmail] = useState('');
     const [ birthday, setBirthday ] = useState('');
+
 
 
     const handleSubmit = (e) => {
@@ -27,7 +31,7 @@ export function RegistrationView(props) {
         .then(response => {
           const data = response.data;
           console.log(data);
-          alert('registration Successful')
+          console.log('registration Successful')
           window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
           
         })
@@ -37,53 +41,118 @@ export function RegistrationView(props) {
       };
 
 return (
-    <form>
-       <Form.Group controlId="formUsername">
-  <Form.Label>
-    Username:
-  </Form.Label>
-  <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} />
-</Form.Group>
 
-<Form.Group controlId="formPassword">
-  <Form.Label>
-  Password:
-  </Form.Label>
-  <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
-</Form.Group>
+<Container className="login-view">
+    <Row >
+        <Form className="login was-validated" noValidate >
+            <Form.Group  controlId="formUsername">
+              <h1>Registration</h1>
+              <Form.Label>
+                Username:
+              </Form.Label>
+              <Form.Control  
+              required
+              type="text" 
+              maxLength={20}
+              minLength={5}
+              placeholder="Enter username" 
+              value={username} 
+              onChange={e => setUsername(e.target.value)} />
+            <Form.Control.Feedback type="valid">
+              awesome you did it!
+            </Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              This field is mandatory!
+            </Form.Control.Feedback>
+          </Form.Group>
 
-<Form.Group controlId="formConfirmPassword">
-  <Form.Label>
-  Confirm Password:
-  </Form.Label>
-  <Form.Control type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-</Form.Group>
+          <Form.Group controlId="formGroupEmail">
+      <Form.Label>Email:</Form.Label>
+      <Form.Control
+          required type="email"
+          placeholder="Enter@E.mail"
+          pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+          value={email}
+          onChange={e => setEmail(e.target.value)} />
+      <Form.Control.Feedback type="invalid" className="error form-info">
+          Please enter a valid email.
+      </Form.Control.Feedback>
+      </Form.Group>
+    
+          <InputGroup hasValidation>
+      <Form.Group controlId="formPassword">
+        <Form.Label>
+        Password:
+        </Form.Label>
+        <Form.Control 
+          required 
+          type="password" 
+          placeholder="Enter your Password" 
+          value={password} 
+          onChange={e => setPassword(e.target.value)} />
+       <Form.Control.Feedback type="valid">
+          awesome you did it!
+        </Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          This field is mandatory too!
+        </Form.Control.Feedback>
+      </Form.Group>
+      </InputGroup>
 
+      <Form.Group controlId="formConfirmPassword">
+      <Form.Label>
+      Confirm Password:
+      </Form.Label>
+      <Form.Control 
+          required
+          type="password" 
+          placeholder="Confirm password" 
+          value={confirmPassword} 
+          onChange={e => setConfirmPassword(e.target.value)}
+          isValid = {confirmPassword === password}
+          />
+        <Form.Control.Feedback type="valid">
+          awesome you did it!
+        </Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          This field is mandatory too!
+        </Form.Control.Feedback>
+      </Form.Group>
 
-<Form.Group controlId="formBirthday">
-  <Form.Label>
-  Birthday:
-  </Form.Label>
-  <Form.Control type="Birthday" value={birthday} onChange={e => setBirthday(e.target.value)} />
-</Form.Group>
+      <Form.Group controlId="formBirthday">
+        <Form.Label>
+            Birthday:
+        </Form.Label>
+        <Form.Control 
+        required
+        type="date" 
+        min="1900-01-01" 
+        max={new Date().toISOString().split('T')[0]}
+        placeholder="MM/DD/YYYY" 
+        value={birthday} 
+        onChange={e => setBirthday(e.target.value)} />
+        <Form.Control.Feedback type="valid">
+          awesome you did it!
+        </Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          This field is mandatory too!
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Row>
 
+      </Row>
+      <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button> 
+      <Link to={`/`}>
+        <Button variant="secondary">Back to login</Button>
+      </Link>
+        </Form>
+    </Row>
 
-<Form.Group controlId="formEmail">
-  <Form.Label>
-  Email: 
-  </Form.Label>
-  <Form.Control type="Email" value={email} onChange={e => setEmail(e.target.value)} />
-</Form.Group>
-     
-<Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
+    
 
-<Link to={`/`}>
-  <Button variant="secondary">Back to login</Button>
-</Link>
+</Container>
 
-</form>
-
-);
+  );
 }
 
 RegistrationView.propTypes = {
@@ -95,5 +164,3 @@ RegistrationView.propTypes = {
     handleSubmit: PropTypes.func.isRequired
   };
 
-// <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-// <Button variant="secondary" type="submit" onClick={newUser}>Register</Button>

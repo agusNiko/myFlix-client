@@ -59,12 +59,12 @@ export class MainView extends React.Component{
       }
 
     getUser(token){
-
       axios.get(`https://myflapix.herokuapp.com/users/${localStorage.user}`, {
         headers: { Authorization: `Bearer ${token}`}
       })
       .then(response => {
         // Assign the result to the state
+        console.log(response)
         this.setState({
           userData: response.data
         });
@@ -74,19 +74,52 @@ export class MainView extends React.Component{
       });
     }
 
-    //I am working here
-    unRegister(token){
-
-      axios.delete(`https://myflapix.herokuapp.com//users/${localStorage.user}`, {
-        headers: { Authorization: `Bearer ${token}`}
+    addToFavorites(movieId){
+      axios.post(`https://myflapix.herokuapp.com/users/movies/${localStorage.user}/${movieId}`, {}, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
       })
       .then(response => {
         // Assign the result to the state
-        this.setState({
-          onLoggedOut()
-        });
+        console.log(response)
+        console.log(movieId+' was added') 
       })
       .catch(function (error) {
+        console.log(error);
+      });
+    }
+    
+    removeMovie(movieId){
+      axios.post(`https://myflapix.herokuapp.com/users/movies/${localStorage.user}/${movieId}/remove`, {}, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
+      })
+      .then(response => {
+        // Assign the result to the state
+        console.log(response)
+        console.log(movieId+' was removed')       
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    //I am working here
+    unRegister(){
+           
+        alert('are you sure????'); //how can I create a a cancel alert????
+     
+      axios.delete(`https://myflapix.herokuapp.com/users/${localStorage.user}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
+      })
+      .then(response => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+          // Assign the result to the state
+          this.setState({
+            user: null,
+            userData:[]
+          });
+        }
+      ).catch(function (error) {
         console.log(error);
       });
     }
@@ -166,14 +199,19 @@ export class MainView extends React.Component{
           <Route path="/movies/:movieId" render={({ match, history }) => {
             if (!user) return <Redirect to="/" />
             return <Col md={8}>
-              <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
+              <MovieView  movie={
+                movies.find(m => m._id === match.params.movieId)} 
+                onBackClick={() => history.goBack()} 
+                toFavoriteMovie={(movieId)=> {this.addToFavorites(movieId)}}
+                removeFavoriteMovie={(movieId)=> {this.removeMovie(movieId)}}
+                />
             </Col>
           }}/>
 
           <Route path="/profile" render={({history}) => {
             if (!user) return <Redirect to="/" />
              return <Col>
-               <ProfileView userData={userData} onBackClick={() => history.goBack()}/>
+               <ProfileView userData={userData} movies={movies} onBackClick={() => history.goBack() } onUnregisterClick={() => this.unRegister()} />
              </Col>
              }}
             />

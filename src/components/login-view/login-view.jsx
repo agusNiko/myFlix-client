@@ -6,6 +6,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup'
 
+import { Container } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+
+
 
 import { Link } from "react-router-dom";
 
@@ -14,8 +18,6 @@ export function LoginView(props) {
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
 
-
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,51 +29,86 @@ export function LoginView(props) {
     .then(response => {
       const data = response.data;
       props.onLoggedIn(data);
+      window.open('/', '_self');
     })
     .catch(e => {
-      console.log('no such user')
+      console.log('no such user');
+      alert('Username or Password incorrect')
     });
   };
 
 
 
   return (
-    <form>
 
-      <InputGroup hasValidation> 
-      <Form.Group  controlId="formUsername">
-        <Form.Label>
-          Username:
-        </Form.Label>
-        <Form.Control  type="text" required isInvalid value={username} onChange={e => setUsername(e.target.value)} />
-        <Form.Control.Feedback type="invalid">
-          Please add your Username
-        </Form.Control.Feedback>
-      </Form.Group>
-      </InputGroup>
-
-      <InputGroup hasValidation>
+    <Container className="login-view">
+    <Row >
+        <Form className="login was-validated" noValidate >
+            <Form.Group  controlId="formUsername">
+              <Form.Label>
+                Username:
+              </Form.Label>
+              <Form.Control  
+              required
+              type="text" 
+              maxLength={20}
+              minLength={5}
+              placeholder="Enter username" 
+              value={username} 
+              onChange={e => setUsername(e.target.value)} />
+            <Form.Control.Feedback type="valid">
+              awesome you did it!
+            </Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              This field is mandatory!
+            </Form.Control.Feedback>
+          </Form.Group>
+    
+          <InputGroup hasValidation>
       <Form.Group controlId="formPassword">
         <Form.Label>
         Password:
         </Form.Label>
-        <Form.Control type="password" isInvalid required value={password} onChange={e => setPassword(e.target.value)} />
+        <Form.Control 
+          required 
+          type="password" 
+          placeholder="Enter your Password" 
+          value={password} 
+          onChange={e => setPassword(e.target.value)} />
+       <Form.Control.Feedback type="valid">
+          awesome you did it!
+        </Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">
-          Please add your Password
+          This field is mandatory too!
         </Form.Control.Feedback>
       </Form.Group>
       </InputGroup>
+          </Form>
+    </Row>
 
-      <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-
-
-
+    <Row>
+        <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
       <Link to={`/register`}>
         <Button  variant="secondary" type="submit">Register</Button>
-      </Link>
+     </Link>
+    </Row>
+</Container>
+  //   <form>
+
+ 
 
 
-    </form>
+  //     <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
+
+
+
+  //     <Link to={`/register`}>
+  //       <Button  variant="secondary" type="submit">Register</Button>
+  //     </Link>
+
+
+  //   </form>
+
   );
 }
 

@@ -16,11 +16,15 @@ function Header(props) {
             <Navbar.Brand href="#home">
             {'myFlipapix'}
             </Navbar.Brand>
-            <button variant="secondary" onClick={logout}>Logout</button>
+            
+            <button variant="Link" onClick={logout}>Logout</button>
        
             <Link to={`/profile`}>
-                    <Button variant="secondary">Profile</Button>
-                </Link>
+                    <Button variant="outline-primary">Profile</Button>
+            </Link>
+            <Link to={`/`}>
+                    <Button variant="outline-primary">Main View</Button>
+            </Link>
 
           </Navbar>
         );
