@@ -18,7 +18,6 @@ export function RegistrationView(props) {
     const [ birthday, setBirthday ] = useState('');
 
 
-
     const handleSubmit = (e) => {
      e.preventDefault();
         console.log(username, password, confirmPassword, email, birthday); //
@@ -57,6 +56,7 @@ return (
               minLength={5}
               placeholder="Enter username" 
               value={username} 
+              
               onChange={e => setUsername(e.target.value)} />
             <Form.Control.Feedback type="valid">
               awesome you did it!
@@ -66,7 +66,7 @@ return (
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="formGroupEmail">
+      <Form.Group controlId="formGroupEmail">
       <Form.Label>Email:</Form.Label>
       <Form.Control
           required type="email"
@@ -88,7 +88,10 @@ return (
           required 
           type="password" 
           placeholder="Enter your Password" 
+          maxLength={50}
+          minLength={6}
           value={password} 
+          name="up"
           onChange={e => setPassword(e.target.value)} />
        <Form.Control.Feedback type="valid">
           awesome you did it!
@@ -108,14 +111,15 @@ return (
           type="password" 
           placeholder="Confirm password" 
           value={confirmPassword} 
+          name="up2"
           onChange={e => setConfirmPassword(e.target.value)}
-          isValid = {confirmPassword === password}
+          // isValid = {confirmPassword === password}
           />
         <Form.Control.Feedback type="valid">
           awesome you did it!
         </Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">
-          This field is mandatory too!
+          your password does not match!
         </Form.Control.Feedback>
       </Form.Group>
 
@@ -155,12 +159,12 @@ return (
   );
 }
 
-RegistrationView.propTypes = {
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    confirmPassword: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    Birthday: PropTypes.string.isRequired,
-    handleSubmit: PropTypes.func.isRequired
-  };
+RegistrationView.propType = {
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  confirmPassword: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  birthday: PropTypes.string.isRequired,
+  handleSubmit: PropTypes.func.isRequired
+};
 

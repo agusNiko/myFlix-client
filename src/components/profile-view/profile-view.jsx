@@ -12,11 +12,14 @@ import { Link } from "react-router-dom";
 
 export function ProfileView(props) {
    
+    const {userData,  onBackClick, onUnregisterClick, movies} = props
+
     const [ newUsername, setNewUsername ] = useState('');
     const [ username, setUsername ] = useState(props.userData.Username)
     const [ favoriteMovie, setFavoriteMovie ] = useState('')
+    //const [ birthday, setBirthday ] = (userData.Birthday)
 
-    const {userData,  onBackClick, onUnregisterClick, movies} = props
+   
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -35,6 +38,8 @@ export function ProfileView(props) {
             console.log(err);
           });
     };
+   
+    
 
     const removeFromFavorites = (e) => {
         e.preventDefault();
@@ -52,7 +57,7 @@ export function ProfileView(props) {
       });
     }
 
-
+   
 
     useEffect(() => {
     
@@ -63,8 +68,10 @@ export function ProfileView(props) {
         if (!movies.[favMovieIndex]){
             setFavoriteMovie('no favorite movie')
         } else {
-        setFavoriteMovie(movies.[favMovieIndex].Title)
+            let  = movies.[favMovieIndex].Title
+        setFavoriteMovie(favMovTitle)
         console.log(favoriteMovie)
+        console.log(birthday)
         }
       });
     
