@@ -58,6 +58,8 @@ export class MainView extends React.Component{
         });
       }
 
+      
+
     getUser(token){
       axios.get(`https://myflapix.herokuapp.com/users/${localStorage.user}`, {
         headers: { Authorization: `Bearer ${token}`}
@@ -94,6 +96,7 @@ export class MainView extends React.Component{
       })
       .then(response => {
         // Assign the result to the state
+
         console.log(response)
         console.log(movieId+' was removed')       
       })
