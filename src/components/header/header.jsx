@@ -4,11 +4,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav'
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col'
-import '../header/header.jsx';
 
 function Header(props) {
-  const [ username, setUsername ] = useState()
+
 
   const logout = ()=> {
     props.onLogOut()
@@ -26,16 +24,16 @@ function Header(props) {
             <Nav className="mr-auto">
             
             <Link to={`/profile`}>
-                    <Button variant="Link">Profile</Button>
+                    <Button style={{ color: 'whitesmoke' }} variant="Link">Profile</Button>
             </Link>
            
           
             <Link to={`/`}>
-                    <Button variant="Link">Main View</Button>
+                    <Button style={{ color: 'whitesmoke' }} variant="Link">Main View</Button>
             </Link>
             
   
-             <Button variant="Link" onClick={logout}>Logout</Button>
+             <Button  style={{ color: 'whitesmoke' }} variant="Link" onClick={logout}>Logout</Button>
            
             </Nav>}
           </Navbar>

@@ -5,12 +5,20 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup'
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 
 
 import { Link } from "react-router-dom";
 
-export function ProfileView(props) {
+
+// const mapStateToProps = state => {
+//     const { movies } = state;
+//     return { movies };
+// };
+
+
+function ProfileView(props) {
    
     const {userData,  onBackClick, onUnregisterClick, movies} = props
 
@@ -123,6 +131,8 @@ export function ProfileView(props) {
         );
     
 }
+
+// export default connect(mapStateToProps)();
 
 // ProfileView.propTypes = {
 //     movie: PropTypes.shape({

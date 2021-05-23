@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 // #0
-import { setMovies } from '../../actions/actions';
 import { setUserData } from '../../actions/actions';
+import { setMovies } from '../../actions/actions';
+
 
 import MoviesList from '../movies-list/movies-list';
 
@@ -21,7 +22,7 @@ import  Header  from '../header/header';
 import {DirectorView} from '../director-view/director-view';
 import {GenreView} from '../genre-view/genre-view';
 
-import {ProfileView} from '../profile-view/profile-view';
+import ProfileView from '../profile-view/profile-view';
 
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
