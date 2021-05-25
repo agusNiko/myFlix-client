@@ -18,7 +18,7 @@ const mapStateToProps = state => {
 };
 
 
-function ProfileView(props) {
+export function ProfileView(props) {
    
     const {userData,  onBackClick, onUnregisterClick, movies} = props
 
@@ -74,10 +74,9 @@ function ProfileView(props) {
         if (!movies.favMovieIndex){
             setFavoriteMovie('no favorite movie')
         } else {
-            let  = movies.favMovieIndex.Title
+            let favMovTitle = movies.favMovieIndex.Title
         setFavoriteMovie(favMovTitle)
         console.log(favoriteMovie)
-        console.log(birthday)
         }
       });
     
@@ -91,7 +90,7 @@ function ProfileView(props) {
                     <Card.Text>Birthday: {userData.Birthday}</Card.Text>
                     <Card.Text>E-mail: {userData.Email}</Card.Text>
                     <Card.Text>Favorite movie: {favoriteMovie}</Card.Text>
-                    <button varian="alert" onClick={removeFromFavorites}>remove movie</button>
+                    <button variant="alert" onClick={removeFromFavorites}>remove movie</button>
                 </Card.Body>
               
 
@@ -127,8 +126,9 @@ function ProfileView(props) {
             </div>
 
         );
-    
+
 }
+
 
 //export default connect(mapStateToProps)();
 
