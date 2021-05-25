@@ -1,1 +1,0 @@
-{"mappings":"AAEA,SACE,aCDF","sources":["./src/src/index.scss","./src/%3Cinput%20css%20b0XMzz%3E"],"sourcesContent":["$color: steelblue;\r\n\r\n.my-flix {\r\n  color: $color;\r\n}\r\n",".my-flix {\n  color: steelblue;\n}\n/*# sourceMappingURL=index.33e2ced4.css.map */\n"],"names":[],"version":3,"file":"index.b87e3c8a.css.map","sourceRoot":"/__parcel_source_root/"}
