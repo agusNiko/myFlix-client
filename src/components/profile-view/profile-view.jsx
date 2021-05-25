@@ -12,10 +12,10 @@ import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
 
-// const mapStateToProps = state => {
-//     const { movies } = state;
-//     return { movies };
-// };
+const mapStateToProps = state => {
+    const { movies } = state;
+    return { movies };
+};
 
 
 function ProfileView(props) {
@@ -64,8 +64,6 @@ function ProfileView(props) {
         console.log(err);
       });
     }
-
-   
 
     useEffect(() => {
     
@@ -132,7 +130,7 @@ function ProfileView(props) {
     
 }
 
-// export default connect(mapStateToProps)();
+export default connect(mapStateToProps)();
 
 // ProfileView.propTypes = {
 //     movie: PropTypes.shape({
