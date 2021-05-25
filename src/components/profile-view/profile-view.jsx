@@ -71,10 +71,10 @@ function ProfileView(props) {
             return movie._id === userData.FavoriteMovies[0];
         })
 
-        if (!movies.[favMovieIndex]){
+        if (!movies.favMovieIndex){
             setFavoriteMovie('no favorite movie')
         } else {
-            let  = movies.[favMovieIndex].Title
+            let  = movies.favMovieIndex.Title
         setFavoriteMovie(favMovTitle)
         console.log(favoriteMovie)
         console.log(birthday)
@@ -130,7 +130,7 @@ function ProfileView(props) {
     
 }
 
-export default connect(mapStateToProps)();
+//export default connect(mapStateToProps)();
 
 // ProfileView.propTypes = {
 //     movie: PropTypes.shape({

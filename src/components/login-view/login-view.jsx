@@ -37,7 +37,7 @@ export function LoginView(props) {
     });
   };
 
-
+  console.log('log in view just rendered')
 
   return (
 

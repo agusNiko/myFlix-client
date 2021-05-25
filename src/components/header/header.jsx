@@ -11,7 +11,7 @@ function Header(props) {
   const logout = ()=> {
     props.onLogOut()
   }
-  console.log(localStorage.user)
+  console.log('the header just rendered')
    
         return (
         

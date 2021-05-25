@@ -59,7 +59,7 @@ class MainView extends React.Component{
         .then(response => {
           // Assign the result to the state
           // this.setState({movies: response.data}); removed to add to the props.setMovies
-          console.log(response)
+          console.log('response')
           this.props.setMovies(response.data);
         })
         .catch(function (error) {
@@ -186,7 +186,7 @@ class MainView extends React.Component{
               </Col>
             </Row>
 
-            //if (movies.length === 0) return <div className="main-view" />; //I think I don't need this line
+            if (movies.length === 0) return <div className="main-view" />; //I think I don't need this line
 
             return <MoviesList movies={movies}/>;
             
@@ -257,7 +257,6 @@ class MainView extends React.Component{
 let mapStateToProps = state => {
   return { movies: state.movies }
 }
-
 
 export default connect(mapStateToProps, { setMovies } )(MainView);
 
