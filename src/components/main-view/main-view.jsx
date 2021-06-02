@@ -37,7 +37,7 @@ class MainView extends React.Component{
             // movies: [],
             selectedMovie: null,
             user: null,
-            userData: [],
+            //userData: [],
         };
     }
     
@@ -59,8 +59,9 @@ class MainView extends React.Component{
         .then(response => {
           // Assign the result to the state
           // this.setState({movies: response.data}); removed to add to the props.setMovies
-          console.log('response')
+          
           this.props.setMovies(response.data);
+          console.log('redux-State movies has been set')
         })
         .catch(function (error) {
           console.log(error);
@@ -73,11 +74,12 @@ class MainView extends React.Component{
       })
       .then(response => {
         // Assign the result to the state
-        console.log(response)
-        this.setState({
-          userData: response.data
-        });
+        // console.log(response)
+        // this.setState({
+        //   userData: response.data
+        // });
         this.props.setUserData(response.data);
+        console.log('redux-state userData should be set')
       })
       .catch(function (error) {
         console.log(error);
@@ -165,8 +167,8 @@ class MainView extends React.Component{
       }
 
     render() {
-      const { user, userData } = this.state;
-      const { movies } = this.props;
+      const { user } = this.state;
+      const { movies, userData } = this.props;
 
       return (
     
@@ -223,10 +225,10 @@ class MainView extends React.Component{
           <Route path="/profile" render={({history}) => {
             if (!user) return <Redirect to="/" />
              return <Col>
-               <ProfileView userData={userData} movies={movies} onBackClick={() => history.goBack() } onUnregisterClick={() => this.unRegister()} />
+               <ProfileView onBackClick={() => history.goBack() } onUnregisterClick={() => this.unRegister()} />
              </Col>
              }}
-            />
+          />
 
           <Route path="/directors/:name" render={({ match, history }) => {
          if (!user) return <Redirect to="/" />
@@ -255,8 +257,11 @@ class MainView extends React.Component{
 
 
 let mapStateToProps = state => {
-  return { movies: state.movies }
+  return { movies: state.movies,
+           userData: state.userData }
 }
 
-export default connect(mapStateToProps, { setMovies } )(MainView);
+//how to set the 
+
+export default connect(mapStateToProps, { setMovies, setUserData} )(MainView);
 

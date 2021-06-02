@@ -7,14 +7,17 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import axios from 'axios';
 import { connect } from 'react-redux';
 
+import { setUserData } from '../../actions/actions';
+import { setMovies } from '../../actions/actions';
+
 
 
 import { Link } from "react-router-dom";
 
 
 const mapStateToProps = state => {
-    const { movies } = state;
-    return { movies };
+    const { movies, userData } = state;
+    return { movies, userData };
 };
 
 
@@ -24,8 +27,9 @@ export function ProfileView(props) {
 
     const [ newUsername, setNewUsername ] = useState('');
     const [ username, setUsername ] = useState(props.userData.Username)
-    const [ favoriteMovie, setFavoriteMovie ] = useState('')
+    //const [ favoriteMovie, setFavoriteMovie ] = useState('')
     //const [ birthday, setBirthday ] = (userData.Birthday)
+    
 
    
 
@@ -47,17 +51,16 @@ export function ProfileView(props) {
           });
     };
    
-    
-
-    const removeFromFavorites = (e) => {
-        e.preventDefault();
-        console.log(userData)
+    const removeFromFavorites = (movieId) => {
         
-        axios.post(`https://myflapix.herokuapp.com/users/movies/${localStorage.user}/${userData.FavoriteMovies}/remove`, {},
+        axios.post(`https://myflapix.herokuapp.com/users/movies/${localStorage.user}/${movieId}/remove`, {},
         {headers: { Authorization: `Bearer ${localStorage.getItem('token')}`},
         }).then(response => {
         console.log('Favorite movie was removed')
-              
+              let newUserData = {... userData}
+              newUserData.FavoriteMovies = userData.FavoriteMovies.filter((mId => { return mId !== movieId}))
+              setUserData(newUserData)
+              console.log(newUserData)
        //window.open('/profile', '_self');
       })
       .catch(err => {
@@ -65,21 +68,25 @@ export function ProfileView(props) {
       });
     }
 
-    useEffect(() => {
+    // useEffect(() => {
     
-        const favMovieIndex = movies.findIndex((movie) => {
-            return movie._id === userData.FavoriteMovies[0];
+    //     const favMovieIndex = movies.findIndex((movie) => {
+    //         return movie._id === userData.FavoriteMovies[0];
+    //     })
+
+    //     if (!movies.favMovieIndex){
+    //         setFavoriteMovie('no favorite movie')
+    //     } else {
+    //         let favMovTitle = movies.favMovieIndex.Title
+    //     setFavoriteMovie(favMovTitle)
+    //     console.log(favoriteMovie)
+    //     }
+    //   });
+        let favoriteMovieList = userData.FavoriteMovies.map((movieId) =>{ 
+            return <li key={movieId}>{movies.find((movie) => { return  movie._id === movieId} ).Title }
+            <button variant="alert" onClick={() => { removeFromFavorites(movieId)}}>remove movie</button></li>
         })
 
-        if (!movies.favMovieIndex){
-            setFavoriteMovie('no favorite movie')
-        } else {
-            let favMovTitle = movies.favMovieIndex.Title
-        setFavoriteMovie(favMovTitle)
-        console.log(favoriteMovie)
-        }
-      });
-    
     return (
 
             <div>
@@ -89,8 +96,9 @@ export function ProfileView(props) {
                     <Card.Title>Username: {username}</Card.Title>
                     <Card.Text>Birthday: {userData.Birthday}</Card.Text>
                     <Card.Text>E-mail: {userData.Email}</Card.Text>
-                    <Card.Text>Favorite movie: {favoriteMovie}</Card.Text>
-                    <button variant="alert" onClick={removeFromFavorites}>remove movie</button>
+                    <Card.Text>Favorite movie: </Card.Text> 
+                    <ol> {favoriteMovieList} </ol>
+                    
                 </Card.Body>
               
 
@@ -130,7 +138,8 @@ export function ProfileView(props) {
 }
 
 
-//export default connect(mapStateToProps)();
+
+export default connect(mapStateToProps, { setMovies, setUserData} )(ProfileView);
 
 // ProfileView.propTypes = {
 //     movie: PropTypes.shape({
