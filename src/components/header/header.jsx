@@ -18,9 +18,9 @@ function Header(props) {
   console.log('the header just rendered')
    
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
       <Navbar.Brand href="/">
-        {'myFlipapix'}
+        <h1 className="mb-3 ml-3" style={{color: "red", fontWeight:700, fontSize:"50px"}}>myFlix</h1>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
       {localStorage.user && 
