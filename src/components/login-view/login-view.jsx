@@ -42,47 +42,43 @@ export function LoginView(props) {
   return (
 
     <Container className="login-view mt-5">
+      
       <Row >
         <Col></Col>
         <Col>
-    
           <Form className="login was-validated" noValidate >
             <Form.Group  controlId="formUsername">
-              <Form.Label>
-                Username:
+              <Form.Label className="mb-3" style={{color: "white", fontWeight:700, fontSize:"32px"}}>
+                Sign In
               </Form.Label>
               <Form.Control  
                 required
                 type="text" 
                 maxLength={20}
                 minLength={5}
-                placeholder="Enter username" 
+                placeholder="Username" 
                 value={username} 
                 onChange={e => setUsername(e.target.value)} />
               <Form.Control.Feedback type="valid">
-                awesome you did it!
+                awesome!
               </Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                This field is mandatory!
+                Enter your Username!
               </Form.Control.Feedback>
             </Form.Group>
-            
-      
+                
               <Form.Group controlId="formPassword">
-                <Form.Label>
-                Password:
-                </Form.Label>
                 <Form.Control 
                   required 
                   type="password" 
-                  placeholder="Enter your Password" 
+                  placeholder="Password" 
                   value={password} 
                   onChange={e => setPassword(e.target.value)} />
                 <Form.Control.Feedback type="valid">
-                  awesome you did it!
+                  awesome!
                 </Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
-                  This field is mandatory too!
+                  Enter your Password!
                 </Form.Control.Feedback>
               </Form.Group>
             </Form>
@@ -91,16 +87,25 @@ export function LoginView(props) {
         </Col>
       </Row>
 
-      <Row>
+      <Row className="mb-3">
         <Col></Col>
         <Col>
-          <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
+          <Button variant="danger" type="submit" onClick={handleSubmit} style={{width:"100%"}}>Sign In</Button>
+        </Col>
+        <Col></Col>
+      </Row>
+      <Row className="align-items-top justify-content-between">
+        <Col></Col>
+        <Col>
+         <p style={{fontWeight:600}} >New to myFlix?</p> 
           <Link to={`/register`}>
-            <Button  variant="secondary" type="submit">Register</Button>
+            <Button  variant="link" type="submit" style={{color:"white", fontWeight:600}}>Sign Up Now!</Button>
           </Link>
         </Col>
         <Col></Col>
       </Row>
+
+
     </Container>
 
   );
