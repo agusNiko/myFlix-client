@@ -41,11 +41,11 @@ export function LoginView(props) {
 
   return (
 
-    <Container className="login-view mt-5">
+    <Container className="login-view mt-4">
       
       <Row >
         <Col></Col>
-        <Col>
+        <Col sm={8} lg={4}>
           <Form className="login was-validated" noValidate >
             <Form.Group  controlId="formUsername">
               <Form.Label className="mb-3" style={{color: "white", fontWeight:700, fontSize:"32px"}}>
@@ -89,20 +89,19 @@ export function LoginView(props) {
 
       <Row className="mb-3">
         <Col></Col>
-        <Col>
+        <Col sm={8} lg={4}>
           <Button variant="danger" type="submit" onClick={handleSubmit} style={{width:"100%"}}>Sign In</Button>
         </Col>
         <Col></Col>
       </Row>
-      <Row className="align-items-top justify-content-between">
-        <Col></Col>
-        <Col>
-         <p style={{fontWeight:600}} >New to myFlix?</p> 
-          <Link to={`/register`}>
-            <Button  variant="link" type="submit" style={{color:"white", fontWeight:600}}>Sign Up Now!</Button>
+      <Row className="mt-4 justify-content-md-center">
+              
+         <p style={{color:"#737374", padding: "8px"}} >New to myFlix?</p>
+ 
+          <Link className="" to={`/register`}>
+            <Button  variant="link" type="submit" style={{color:"white", fontWeight:600, width: "100%"}}>Sign Up Now!</Button>
           </Link>
-        </Col>
-        <Col></Col>
+
       </Row>
 
 
@@ -116,3 +115,5 @@ LoginView.propType = {
     password: PropTypes.string.isRequired,
     handleSubmit: PropTypes.func.isRequired
 };
+
+
