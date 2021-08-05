@@ -24,7 +24,7 @@ import {GenreView} from '../genre-view/genre-view';
 
 import ProfileView from '../profile-view/profile-view';
 
-import { Container } from 'react-bootstrap';
+
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -34,10 +34,8 @@ class MainView extends React.Component{
     constructor(){
         super();// initializes your component’s state, and without it, you’ll get an error if you try to use this.state inside constructor()
         this.state = { 
-            // movies: [],
             selectedMovie: null,
             user: null,
-            //userData: [],
         };
     }
     
@@ -116,24 +114,24 @@ class MainView extends React.Component{
 
     //I am working here
     unRegister(){
-           
-        alert('are you sure????'); //how can I create a a cancel alert????
-     
-      axios.delete(`https://myflapix.herokuapp.com/users/${localStorage.user}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
-      })
-      .then(response => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-          // Assign the result to the state
-          this.setState({
-            user: null,
-            userData:[]
-          });
-        }
-      ).catch(function (error) {
-        console.log(error);
-      });
+         
+      if (window.confirm("Do you really want to delete your account?")) {
+        axios.delete(`https://myflapix.herokuapp.com/users/${localStorage.user}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
+        })
+        .then(response => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+            // Assign the result to the state
+            this.setState({
+              user: null,
+              userData:[]
+            });
+          }
+        ).catch(function (error) {
+          console.log(error);
+        });
+      }
     }
 
 
@@ -174,20 +172,14 @@ class MainView extends React.Component{
     
       <Router>
 
-      <Header onLogOut={() => { this.onLoggedOut() }}/>
-        
-        <Container>
-
-        <Row className="main-view">
+<Header onLogOut={() => { this.onLoggedOut() }}/>
+       
+         <div className="main-view">
      
           <Route exact path="/" render={() => {
 
-            if (!user) return <Row>
-              <Col>
-                <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
-              </Col>
-            </Row>
-
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
+             
             if (movies.length === 0) return <div className="main-view" />; //I think I don't need this line
 
             return <MoviesList movies={movies}/>;
@@ -211,21 +203,20 @@ class MainView extends React.Component{
 
           <Route path="/movies/:movieId" render={({ match, history }) => {
             if (!user) return <Redirect to="/" />
-            return <Col md={8}>
-              <MovieView  movie={
+            return <MovieView  movie={
                 movies.find(m => m._id === match.params.movieId)} 
                 onBackClick={() => history.goBack()} 
                 toFavoriteMovie={(movieId)=> {this.addToFavorites(movieId)}}
                 removeFavoriteMovie={(movieId)=> {this.removeMovie(movieId)}}
                 userData = {userData}
                 />
-            </Col>
+            
           }}/>
 
           <Route path="/profile" render={({history}) => {
             if (!user) return <Redirect to="/" />
              return <Col>
-               <ProfileView onBackClick={() => history.goBack() } onUnregisterClick={() => this.unRegister()} />
+               <ProfileView onBackClick={() => history.goBack() } onUnregisterClick={() => this.unRegister()} userData = {userData} removeFavoriteMovie={(movieId)=> {this.removeMovie(movieId)}}/>
              </Col>
              }}
           />
@@ -246,8 +237,8 @@ class MainView extends React.Component{
           }
           }/>
 
-        </Row>
-        </Container>
+        </div>
+    
       </Router>
     );
 
