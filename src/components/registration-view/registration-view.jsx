@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup'
 
+
 import { FaBeer } from 'react-icons/fa';
 
 
@@ -36,10 +37,9 @@ export function RegistrationView(props) {
           const data = response.data;
           console.log(data);
           console.log('registration Successful')
-          alert('Welcome to myFlix ' + username+ ', Now your can sign in')
+          alert('Welcome to myFlix ' + username+ ', go back to sign in')
           //window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
-          
-        })
+         })
         .catch(e => {
           console.log('error registering the user')
           alert('Something went wrong! try using another username, change the password or email')
