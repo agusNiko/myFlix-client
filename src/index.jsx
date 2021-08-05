@@ -21,7 +21,7 @@ class MyFlixApplication extends React.Component {
   render() {
     return (
     <Provider store={store}>
-      <Container fluid>
+      <Container fluid style={{height: "100vh", marginTop: "0px"}}>
         <MainView/>
       </Container>
     </Provider>  
