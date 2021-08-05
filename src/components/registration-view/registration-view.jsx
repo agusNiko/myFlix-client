@@ -5,10 +5,15 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup'
 
+import { FaBeer } from 'react-icons/fa';
+
+
+import { ImArrowLeft } from "react-icons/im";
 
 export function RegistrationView(props) {
     const [ username, setUsername ] = useState('');
@@ -31,46 +36,48 @@ export function RegistrationView(props) {
           const data = response.data;
           console.log(data);
           console.log('registration Successful')
+          alert('Welcome to myFlix ' + username+ ', Now your can sign in')
           //window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
           
         })
         .catch(e => {
           console.log('error registering the user')
+          alert('Something went wrong! try using another username, change the password or email')
         });
       };
 
 return (
 
-<Container className="login-view">
-    <Row >
+    <Row className="login-view" className="justify-content-md-between">
+      <Col></Col>
+      <Col sm={8} lg={4}>
         <Form className="login was-validated" noValidate >
             <Form.Group  controlId="formUsername">
-              <h1>Registration</h1>
-              <Form.Label>
-                Username:
+
+              <Form.Label className="mb-3" style={{color: "white", fontWeight:700, fontSize:"32px"}}>
+                Sign Up  <FaBeer />
               </Form.Label>
               <Form.Control  
               required
               type="text" 
               maxLength={20}
               minLength={5}
-              placeholder="Enter username" 
+              placeholder="Username" 
               value={username} 
               
               onChange={e => setUsername(e.target.value)} />
             <Form.Control.Feedback type="valid">
-              awesome you did it!
+              awesome!
             </Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
-              This field is mandatory!
+              Please select a Username!
             </Form.Control.Feedback>
           </Form.Group>
 
       <Form.Group controlId="formGroupEmail">
-      <Form.Label>Email:</Form.Label>
       <Form.Control
           required type="email"
-          placeholder="Enter@E.mail"
+          placeholder="Enter@your.email"
           pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
           value={email}
           onChange={e => setEmail(e.target.value)} />
@@ -79,11 +86,8 @@ return (
       </Form.Control.Feedback>
       </Form.Group>
     
-          <InputGroup hasValidation>
+      
       <Form.Group controlId="formPassword">
-        <Form.Label>
-        Password:
-        </Form.Label>
         <Form.Control 
           required 
           type="password" 
@@ -94,18 +98,15 @@ return (
           name="up"
           onChange={e => setPassword(e.target.value)} />
        <Form.Control.Feedback type="valid">
-          awesome you did it!
+          awesome!
         </Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">
-          This field is mandatory too!
+          Please create a Password, 6 to 50 characters!
         </Form.Control.Feedback>
       </Form.Group>
-      </InputGroup>
+ 
 
       <Form.Group controlId="formConfirmPassword">
-      <Form.Label>
-      Confirm Password:
-      </Form.Label>
       <Form.Control 
           required
           type="password" 
@@ -113,20 +114,17 @@ return (
           value={confirmPassword} 
           name="up2"
           onChange={e => setConfirmPassword(e.target.value)}
-          // isValid = {confirmPassword === password}
+         // isValid = {confirmPassword === password}
           />
         <Form.Control.Feedback type="valid">
-          awesome you did it!
+          awesome!
         </Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">
-          your password does not match!
+          Confirm your Password!
         </Form.Control.Feedback>
       </Form.Group>
 
       <Form.Group controlId="formBirthday">
-        <Form.Label>
-            Birthday:
-        </Form.Label>
         <Form.Control 
         required
         type="date" 
@@ -136,27 +134,28 @@ return (
         value={birthday} 
         onChange={e => setBirthday(e.target.value)} />
         <Form.Control.Feedback type="valid">
-          awesome you did it!
+          awesome!
         </Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">
-          This field is mandatory too!
+          Add your Birthday!
         </Form.Control.Feedback>
       </Form.Group>
-      <Row>
-
-      </Row>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button> 
-      <Link to={`/`}>
-        <Button variant="secondary">Back to login</Button>
+      <Row className="justify-content-md-between">
+      <Button variant="danger" type="submit" style={{width:"100%"}} onClick={handleSubmit}>Sign Up!</Button> 
+      <Link className="mt-4" to={`/`}>
+        <Button className="rounded-circle" variant="outline-secondary">       <ImArrowLeft/> </Button>
       </Link>
+      </Row >
         </Form>
+        </Col>
+        <Col></Col>
+
+
+       
+  
     </Row>
 
-    
-
-</Container>
-
-  );
+);
 }
 
 RegistrationView.propType = {
