@@ -1,34 +1,41 @@
 import React from 'react';
 import axios from 'axios';
+
+// #0.0
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+
+// #0
+import { setUserData } from '../../actions/actions';
+import { setMovies } from '../../actions/actions';
+
+
+import MoviesList from '../movies-list/movies-list';
 
 
 import { LoginView} from '../login-view/login-view'
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieCard } from '../movie-card/movie-card'
+
 import { MovieView } from '../movie-view/MovieView'
 import  Header  from '../header/header';
 import {DirectorView} from '../director-view/director-view';
 import {GenreView} from '../genre-view/genre-view';
 
-import {ProfileView} from '../profile-view/profile-view';
+import ProfileView from '../profile-view/profile-view';
 
-import { Container } from 'react-bootstrap';
+
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
-export class MainView extends React.Component{
+class MainView extends React.Component{
 
     constructor(){
         super();// initializes your component’s state, and without it, you’ll get an error if you try to use this.state inside constructor()
-        this.state = { //this is the component statement(variable)??????
-            movies: [
-     
-            ],
+        this.state = { 
             selectedMovie: null,
             user: null,
-            userData: [],
         };
     }
     
@@ -39,7 +46,7 @@ export class MainView extends React.Component{
             user: localStorage.getItem('user')
           });
           this.getMovies(accessToken);
-          this.getUser(accessToken)
+          this.getUser(accessToken) 
         }
     }
 
@@ -49,9 +56,10 @@ export class MainView extends React.Component{
         })
         .then(response => {
           // Assign the result to the state
-          this.setState({
-            movies: response.data
-          });
+          // this.setState({movies: response.data}); removed to add to the props.setMovies
+          
+          this.props.setMovies(response.data);
+          console.log('redux-State movies has been set')
         })
         .catch(function (error) {
           console.log(error);
@@ -66,10 +74,12 @@ export class MainView extends React.Component{
       })
       .then(response => {
         // Assign the result to the state
-        console.log(response)
-        this.setState({
-          userData: response.data
-        });
+        // console.log(response)
+        // this.setState({
+        //   userData: response.data
+        // });
+        this.props.setUserData(response.data);
+        console.log('redux-state userData should be set')
       })
       .catch(function (error) {
         console.log(error);
@@ -107,24 +117,24 @@ export class MainView extends React.Component{
 
     //I am working here
     unRegister(){
-           
-        alert('are you sure????'); //how can I create a a cancel alert????
-     
-      axios.delete(`https://myflapix.herokuapp.com/users/${localStorage.user}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
-      })
-      .then(response => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-          // Assign the result to the state
-          this.setState({
-            user: null,
-            userData:[]
-          });
-        }
-      ).catch(function (error) {
-        console.log(error);
-      });
+         
+      if (window.confirm("Do you really want to delete your account?")) {
+        axios.delete(`https://myflapix.herokuapp.com/users/${localStorage.user}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
+        })
+        .then(response => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+            // Assign the result to the state
+            this.setState({
+              user: null,
+              userData:[]
+            });
+          }
+        ).catch(function (error) {
+          console.log(error);
+        });
+      }
     }
 
 
@@ -158,36 +168,32 @@ export class MainView extends React.Component{
       }
 
     render() {
-      const { movies, user, userData } = this.state;
+      const { user } = this.state;
+      const { movies, userData } = this.props;
 
       return (
     
       <Router>
 
-      <Header onLogOut={() => { this.onLoggedOut() }}/>
-        
-        <Container>
-
-        
-
-        <Row className="main-view">
+<Header onLogOut={() => { this.onLoggedOut() }}/>
+       
+         <div className="main-view">
      
           <Route exact path="/" render={() => {
 
-            if (!user) return <Row>
-            <Col>
-              <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
+             
+            if (movies.length === 0) return <div className="main-view" />; //I think I don't need this line
 
-            </Col>
-            </Row>
-
-            return movies.map(m => (     
+            return <MoviesList movies={movies}/>;
+            
+            // movies.map(m => (     
                        
-              <Col lg={3} md={4} sm={6} key={m._id}>
+            //   <Col lg={3} md={4} sm={6} key={m._id}>
 
-                <MovieCard movieData={m} />
-              </Col> 
-            ))
+            //     <MovieCard movieData={m} />
+            //   </Col> 
+            // ))
           }}/>
 
           <Route path="/register" render={() => {
@@ -200,24 +206,23 @@ export class MainView extends React.Component{
 
           <Route path="/movies/:movieId" render={({ match, history }) => {
             if (!user) return <Redirect to="/" />
-            return <Col md={8}>
-              <MovieView  movie={
+            return <MovieView  movie={
                 movies.find(m => m._id === match.params.movieId)} 
                 onBackClick={() => history.goBack()} 
                 toFavoriteMovie={(movieId)=> {this.addToFavorites(movieId)}}
                 removeFavoriteMovie={(movieId)=> {this.removeMovie(movieId)}}
                 userData = {userData}
                 />
-            </Col>
+            
           }}/>
 
           <Route path="/profile" render={({history}) => {
             if (!user) return <Redirect to="/" />
              return <Col>
-               <ProfileView userData={userData} movies={movies} onBackClick={() => history.goBack() } onUnregisterClick={() => this.unRegister()} />
+               <ProfileView onBackClick={() => history.goBack() } onUnregisterClick={() => this.unRegister()} userData = {userData} removeFavoriteMovie={(movieId)=> {this.removeMovie(movieId)}}/>
              </Col>
              }}
-            />
+          />
 
           <Route path="/directors/:name" render={({ match, history }) => {
          if (!user) return <Redirect to="/" />
@@ -235,64 +240,22 @@ export class MainView extends React.Component{
           }
           }/>
 
-        </Row>
-        </Container>
+        </div>
+    
       </Router>
     );
 
-
-
-      //   //const movies = this.state.movies; /////// instead of this expression we use the "object destruction"
-      //   const { movies, selectedMovie, user } = this.state; // What is the object destruction? I did not understand 
-
-      //   if (user === 'newUser') return <RegistrationView onRegistration={user => this.onRegistration(user)}/>
-       
-      //   /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
-      //  if (!user) return 
-      //   <Row>
-      //       <Col>
-      //       <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-      //       </Col>
-      //   </Row>
-      //  //if (selectedMovie) return <MovieView movie={selectedMovie}/>
-
-      //   if (movies.length === 0) return <div className="main-view"/>;
-
-      //   return (
-      //       <Container>
-      //        <Header/>  
-      //        <button onClick={() => { this.onLoggedOut() }}>Logout</button>
-      //           <Row className="main-view">
-            
-      //                 {selectedMovie
-      //                   ? (
-                
-      //                       <Col md={1}>
-      //                           <MovieView  movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectMovie(newSelectedMovie); }}/>
-      //                       </Col>
- 
-      //                   )
-      //                   : (
-      //                       movies.map(movie => (
-      //                               <Col lg={3} md={4} sm={6}> 
-      //                                   <MovieCard 
-      //                                       key={movie._id} 
-      //                                       movieData={movie} 
-      //                                       onMovieClick={newSelectedMovie => { 
-      //                                           this.setSelectMovie(newSelectedMovie); 
-      //                                       }}
-      //                                   />
-      //                               </Col>
-      //                       ))
-
-                           
-      //               )
-      //           }
-      //           </Row> 
-                
-      //       </Container> //movieData is the promp?????????,
-      //   );
-    }
+  }
 
 }
+
+
+let mapStateToProps = state => {
+  return { movies: state.movies,
+           userData: state.userData }
+}
+
+//how to set the 
+
+export default connect(mapStateToProps, { setMovies, setUserData} )(MainView);
 

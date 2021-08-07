@@ -8,7 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
-
+import Col from 'react-bootstrap/Col';
 
 
 import { Link } from "react-router-dom";
@@ -37,77 +37,75 @@ export function LoginView(props) {
     });
   };
 
-
+  console.log('log in view just rendered')
 
   return (
 
-    <Container className="login-view">
-    <Row >
-        <Form className="login was-validated" noValidate >
+    <Container className="login-view mt-4">
+      
+      <Row >
+        <Col></Col>
+        <Col sm={8} lg={4}>
+          <Form className="login was-validated" noValidate >
             <Form.Group  controlId="formUsername">
-              <Form.Label>
-                Username:
+              <Form.Label className="mb-3" style={{color: "white", fontWeight:700, fontSize:"32px"}}>
+                Sign In
               </Form.Label>
               <Form.Control  
-              required
-              type="text" 
-              maxLength={20}
-              minLength={5}
-              placeholder="Enter username" 
-              value={username} 
-              onChange={e => setUsername(e.target.value)} />
-            <Form.Control.Feedback type="valid">
-              awesome you did it!
-            </Form.Control.Feedback>
-            <Form.Control.Feedback type="invalid">
-              This field is mandatory!
-            </Form.Control.Feedback>
-          </Form.Group>
-    
-          <InputGroup hasValidation>
-      <Form.Group controlId="formPassword">
-        <Form.Label>
-        Password:
-        </Form.Label>
-        <Form.Control 
-          required 
-          type="password" 
-          placeholder="Enter your Password" 
-          value={password} 
-          onChange={e => setPassword(e.target.value)} />
-       <Form.Control.Feedback type="valid">
-          awesome you did it!
-        </Form.Control.Feedback>
-        <Form.Control.Feedback type="invalid">
-          This field is mandatory too!
-        </Form.Control.Feedback>
-      </Form.Group>
-      </InputGroup>
-          </Form>
-    </Row>
+                required
+                type="text" 
+                maxLength={20}
+                minLength={5}
+                placeholder="Username" 
+                value={username} 
+                onChange={e => setUsername(e.target.value)} />
+              <Form.Control.Feedback type="valid">
+                awesome!
+              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Enter your Username!
+              </Form.Control.Feedback>
+            </Form.Group>
+                
+              <Form.Group controlId="formPassword">
+                <Form.Control 
+                  required 
+                  type="password" 
+                  placeholder="Password" 
+                  value={password} 
+                  onChange={e => setPassword(e.target.value)} />
+                <Form.Control.Feedback type="valid">
+                  awesome!
+                </Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Enter your Password!
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Form>
+        </Col>
+        <Col>
+        </Col>
+      </Row>
 
-    <Row>
-        <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-      <Link to={`/register`}>
-        <Button  variant="secondary" type="submit">Register</Button>
-     </Link>
-    </Row>
-</Container>
-  //   <form>
-
+      <Row className="mb-3">
+        <Col></Col>
+        <Col sm={8} lg={4}>
+          <Button variant="danger" type="submit" onClick={handleSubmit} style={{width:"100%"}}>Sign In</Button>
+        </Col>
+        <Col></Col>
+      </Row>
+      <Row className="mt-4 justify-content-md-center">
+              
+         <p style={{color:"#737374", padding: "8px"}} >New to myFlix?</p>
  
+          <Link className="" to={`/register`}>
+            <Button  variant="link" type="submit" style={{color:"white", fontWeight:600, width: "100%"}}>Sign Up Now!</Button>
+          </Link>
+
+      </Row>
 
 
-  //     <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-
-
-
-  //     <Link to={`/register`}>
-  //       <Button  variant="secondary" type="submit">Register</Button>
-  //     </Link>
-
-
-  //   </form>
+    </Container>
 
   );
 }
@@ -117,3 +115,5 @@ LoginView.propType = {
     password: PropTypes.string.isRequired,
     handleSubmit: PropTypes.func.isRequired
 };
+
+
